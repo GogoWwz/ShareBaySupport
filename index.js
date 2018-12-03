@@ -1,15 +1,10 @@
 const express = require('express')
 const app = express()
 
-const router = require('./router/index.js')
-app.get('/', (req, res) => {
-    res.send('hahahah')
-    res.send('asdkf')
-}).listen(3000, () => {
-    console.log('server runnning at port 3000')
-})
+const Router = require('./router/index.js')
 
-app.get('/login', (req, res) => {
-    console.log(req, res)
-    res.send('Got a GET request')
+app.use('/api', Router)
+
+app.listen(3000, () => {
+    console.log('server is running at port 3000')
 })

@@ -2,9 +2,14 @@ const express = require('express')
 
 const Router = express.Router()
 
-Router.use('/login', (req, res) => {
+Router.get('/', (req, res) => {
     console.log(req, res)
-    res.send('Got a POST request')
+    res.send('Got a GET request')
+})
+
+Router.get('/login', (req, res) => {
+    console.log(req, res)
+    res.send('Got a login request')
 })
 
 module.exports = Router
