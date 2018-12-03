@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 
+const router = require('./router/index.js')
 app.get('/', (req, res) => {
     res.send('hahahah')
     res.send('asdkf')
@@ -10,5 +11,5 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => {
     console.log(req, res)
-    res.send('Got a POST request')
+    res.send('Got a GET request')
 })
