@@ -12,4 +12,9 @@ Router.get('/login', (req, res) => {
     res.send('Got a login request')
 })
 
+Router.get('/register', (req, res) => {
+    console.log(req, res)
+    res.send('Got a register request')
+})
+
 module.exports = Router
