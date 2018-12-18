@@ -9,7 +9,8 @@ Router.get('/', (req, res) => {
 
 Router.get('/login', (req, res) => {
     console.log(req, res)
-    res.send('Got a login request')
+    let data = { code: 0, message: "login success" }
+    res.json(data)
 })
 
 Router.get('/register', (req, res) => {

@@ -6,7 +6,7 @@ const Router = require('./router/index.js')
 
 app.use('/api', Router)
 
-app.use('/public', express.static(path.join(__dirname, 'resource')))
+app.use('/index', express.static(path.join(__dirname, 'resource')))
 
 app.listen(3000, () => {
     console.log('server is running at port 3000')
