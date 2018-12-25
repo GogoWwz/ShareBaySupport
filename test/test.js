@@ -1,33 +1,17 @@
 const mongoose = require('mongoose')
+const UserSchema = require('../schema/User')
 
 const testMongo = async () => {
-    const SchemaT = mongoose.Schema({
-        name: {
-            type: String,
-            required: true,
-            unique: true,
-        },
-        password: {
-            type: String,
-            default: '111111',
-        }
-    });
-
-    const User = mongoose.model('user', SchemaT);
-
-    const user = new User({name: 'licheng'});
-
+    const UserModel = mongoose.model('User', UserSchema, 'User');
+    const user = new UserModel({
+        username: 'wuweizhen'
+    })
     try {
-        const result = await user.save();
-
-        const users = await User.find({});
-
+        const result = await user.save()
+        const users = await UserModel.find({})
         console.log(users);
-
-        // response.json(users);
-
-    } catch(err) {
-        console.log(err.message);
+    } catch (err) {
+        console.log(err)
     }
 
 }

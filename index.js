@@ -1,12 +1,14 @@
 const express = require('express')
 const path = require('path')
-const app = express()
 const mongoose = require('mongoose')
-const Router = require('./router/index.js')
 
+const app = express()
+const mongooseConfig = require('./config/mongoose.config')
+const Router = require('./router/index')
 const testMongo = require('./test/test')
 
-mongoose.connect(`mongodb://admin:wwz1369577@ds139534.mlab.com:39534/sharebay`)
+
+mongoose.connect(`mongodb://admin:wwz1369577@ds139534.mlab.com:39534/sharebay`, mongooseConfig)
 let db = mongoose.connection
 
 // 导入路由
@@ -19,7 +21,7 @@ db.once('open', () => {
 });
 
 // 学习mongoose
-testMongo(mongoose)
+testMongo()
 
 // 托管静态文件
 app.use('/index', express.static(path.join(__dirname, 'resource')))
