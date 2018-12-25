@@ -1,15 +1,22 @@
 const express = require('express')
 const path = require('path')
+const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 
 const app = express()
 const mongooseConfig = require('./config/mongoose.config')
 const Router = require('./router/index')
-const testMongo = require('./test/test')
+// const testMongo = require('./test/test')
 
 
 mongoose.connect(`mongodb://admin:wwz1369577@ds139534.mlab.com:39534/sharebay`, mongooseConfig)
 let db = mongoose.connection
+
+// 解析 content-type 为 application/x-www-form-urlencoded的请求
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// 解析 content-type 为 appication/json的请求
+app.use(bodyParser.json())
 
 // 导入路由
 app.use('/api', Router)
@@ -21,7 +28,7 @@ db.once('open', () => {
 });
 
 // 学习mongoose
-testMongo()
+// testMongo()
 
 // 托管静态文件
 app.use('/index', express.static(path.join(__dirname, 'resource')))
