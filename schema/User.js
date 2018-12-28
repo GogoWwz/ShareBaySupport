@@ -9,6 +9,10 @@ const UserSchema = mongoose.Schema({
     password: {
         type: String,
         default: '123456',
+    },
+    balance: {
+        type: Number,
+        default: 0
     }
 })
 
