@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
-
-const UserSchema = mongoose.Schema({
-    username: {
+const Schema = mongoose.Schema
+const UserSchema = Schema({
+    user_name: {
         type: String,
         required: true,
         unique: true
@@ -13,6 +13,15 @@ const UserSchema = mongoose.Schema({
     balance: {
         type: Number,
         default: 0
+    },
+    group_own: {
+        type: [
+            { 
+                group_id: Schema.Types.ObjectId,
+                group_balance: Number
+            }
+        ],
+        default: []
     }
 })
 
