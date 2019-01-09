@@ -1,9 +1,7 @@
-const mongoose = require('mongoose')
-const UserSchema = require('../../schema/User')
+const UserModel = require('../../models/User')
 const ResMessage = require('../../utils/resMessage')
 
 const loginRouter = async (req, res) => {
-    const UserModel = mongoose.model('user', UserSchema, 'user');
     const loginParams = req.body
     try {
         const result = await UserModel.find({ user_name: loginParams.username })

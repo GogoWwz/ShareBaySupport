@@ -1,9 +1,7 @@
-const mongoose = require('mongoose')
-const GroupSchema = require('../../schema/Group')
+const GroupModel = require('../../models/Group')
 const ResMessage = require('../../utils/resMessage')
 
 const addBalanceRouter = async (req, res) => {
-    const GroupModel = mongoose.model('group', GroupSchema, 'group')
     const addParams = req.body
     try {
         const { groupId: _id, balance: balanceCount } = addParams

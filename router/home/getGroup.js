@@ -1,9 +1,7 @@
-const mongoose = require('mongoose')
-const GroupSchema = require('../../schema/Group')
+const GroupModel = require('../../models/Group')
 const ResMessage = require('../../utils/resMessage')
 
 const groupRouter = async (req, res) => {
-    const GroupModel = mongoose.model('group', GroupSchema, 'group')
     try {
         const result = await GroupModel.find({ "group_members.user_name": "wuweizhen" })
         let data = ResMessage.setFailRes('查询失败')
