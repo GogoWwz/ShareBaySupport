@@ -8,8 +8,11 @@ Router.get('/', (req, res) => {
 // 登录路由
 Router.post('/login', require('./login/login'))
 
-// 获取基本信息
-Router.get('/home/getGroup', require('./home/getGroup'))
+// 注册路由
+Router.post('/register', require('./register/register'))
+
+// 获取余额
+Router.get('/home/getBalance', require('./home/getBalance'))
 // 充值
 Router.post('/home/addBalance', require('./home/addBalance'))
 

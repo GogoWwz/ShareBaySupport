@@ -1,22 +1,16 @@
 const GroupModel = require('../../models/Group')
+const BalanceModel = require('../../models/Balance')
 const ResMessage = require('../../utils/resMessage')
 
 const addBalanceRouter = async (req, res) => {
     const addParams = req.body
+    const { userId: user_id, groupId: group_id, balance: balanceCount } = addParams
     try {
-        const { groupId: _id, balance: balanceCount } = addParams
-        const result = await GroupModel.find({ _id })
+        const result = await BalanceModel.find({ user_id, group_id })
         if(result.length) {
-            let group = result[0]
-            let group_balance = group.group_balance
-            let group_members = group.group_members
-            group_members[0].user_balance += parseFloat(balanceCount)
-            group_balance += parseFloat(balanceCount)
-            let newData = {
-                group_balance,
-                group_members
-            }
-            const rrr = await GroupModel.updateOne({ _id }, newData)
+            let pickBalance = result[0]
+            pickBalance.balance +=parseFloat(balanceCount)
+            await BalanceModel.updateOne({ user_id, group_id }, pickBalance)
         }
         res.json(ResMessage.setSucRes('充值成功！'))
     } catch(err) {

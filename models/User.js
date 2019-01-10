@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const UserSchema = Schema({
+    user_id: {
+        type: Schema.Types.ObjectId
+    },
     user_name: {
         type: String,
         required: true,
@@ -9,19 +12,6 @@ const UserSchema = Schema({
     password: {
         type: String,
         default: '123456',
-    },
-    balance: {
-        type: Number,
-        default: 0
-    },
-    group_own: {
-        type: [
-            { 
-                group_id: Schema.Types.ObjectId,
-                group_balance: Number
-            }
-        ],
-        default: []
     }
 })
 
