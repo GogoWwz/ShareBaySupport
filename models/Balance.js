@@ -15,6 +15,14 @@ const BalanceSchema = Schema({
         type: Number,
         require: true,
         default: 0
+    },
+    dialog: {
+        type: [
+            {
+                datetime: Date,
+                content: String
+            }
+        ]
     }
 })
 

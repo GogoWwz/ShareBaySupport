@@ -22,6 +22,7 @@
     "mongoose": "^5.4.0"
   },
   "devDependencies": {
+    "moment": "^2.23.0",
     "nodemon": "^1.18.7"
   }
 }
