@@ -1,6 +1,6 @@
 const BalanceModel = require('../../models/Balance')
 const GroupModel = require('../../models/Group')
-const ResMessage = require('../../utils/resMessage')
+const ResFuns = require('../../utils/resFuns')
 
 const groupListRouter = async (req, res) => {
     const groupParams = req.query
@@ -17,7 +17,9 @@ const groupListRouter = async (req, res) => {
                     groupName
                 }
             })
-            res.json(ResMessage.setSucRes('', groupResList))
+            ResFuns.responseSuc(res, '查询成功', groupResList)
+        } else {
+            ResFuns.responseFail(res, '找不到该条数据')
         }
     } catch(err) {
         console.log(err)

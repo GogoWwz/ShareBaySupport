@@ -1,18 +1,24 @@
-const BalanceModel = require('../../models/Balance')
-const ResMessage = require('../../utils/resMessage')
+const DialogModel = require('../../models/Dialog')
+const ResFuns = require('../../utils/resFuns')
 
 const dialogRouter = async (req, res) => {
     const { groupId: group_id, userId: user_id } = req.query
-    console.log(group_id, user_id)
     try {
-        const searchKey = { group_id, user_id }
-        const result = await BalanceModel.find(searchKey)
-        let data = ResMessage.setFailRes('查询失败')
-        if(result.length) {
-            let pickBalance = result[0]
-            data = ResMessage.setSucRes('查询成功', pickBalance.dialog)
+        const searchKey = { user_id }
+        if(group_id !== 'allGroup') {
+            searchKey['group_id'] = group_id
         }
-        res.json(data)
+        const result = await DialogModel.find(searchKey).sort({ 'dialog.datetime': 1 })
+        if(result.length) {
+            let dialogList = []
+            for(let i = 0; i < result.length; i++) {
+                let obj = result[i]
+                dialogList.push(obj.dialog)
+            }
+            ResFuns.responseSuc(res, '查询成功', dialogList)
+        } else {
+            ResFuns.responseFail(res, '暂无数据')
+        }
     } catch(err) {
         console.log(err)
     }

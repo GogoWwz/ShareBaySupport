@@ -1,5 +1,6 @@
 const BalanceModel = require('../../models/Balance')
-const ResMessage = require('../../utils/resMessage')
+const DialogModel = require('../../models/Dialog')
+const ResFuns = require('../../utils/resFuns')
 const moment = require('moment')
 
 const addBalanceRouter = async (req, res) => {
@@ -7,19 +8,22 @@ const addBalanceRouter = async (req, res) => {
     const { userId: user_id, groupId: group_id, balance: balanceCount } = addParams
     try {
         const result = await BalanceModel.find({ user_id, group_id })
-        let resData = ResMessage.setFailRes('查询失败')
         if(result.length) {
             let pickBalance = result[0]
-            let newDialog = {
-                datetime: moment(),
-                content: `充值金额${balanceCount}`
-            }
-            pickBalance.dialog.push(newDialog)
             pickBalance.balance += parseFloat(balanceCount)
             await BalanceModel.updateOne({ user_id, group_id }, pickBalance)
-            resData = ResMessage.setSucRes('充值成功！')
+            const newDialog = DialogModel({
+                user_id, group_id,
+                dialog: {
+                    datetime: moment(),
+                    content: `充值金额${balanceCount}`
+                }
+            })
+            newDialog.save()
+            ResFuns.responseSuc(res, '充值成功！')
+        } else {
+            ResFuns.responseFail(res, '找不到该条数据')
         }
-        res.json(resData)
     } catch(err) {
         console.log(err)
     }

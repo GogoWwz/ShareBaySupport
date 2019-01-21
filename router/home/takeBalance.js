@@ -1,5 +1,6 @@
 const BalanceModal = require('../../models/Balance')
-const ResMessage = require('../../utils/resMessage')
+const DialogModel = require('../../models/Dialog')
+const ResFuns = require('../../utils/resFuns')
 const moment = require('moment')
 
 const takeBalanceRouter = async (req, res) => {
@@ -8,24 +9,28 @@ const takeBalanceRouter = async (req, res) => {
     try {
         const searchKey = { group_id, user_id }
         const result = await BalanceModal.find(searchKey)
-        let resData = ResMessage.setFailRes('查询失败')
         if(result.length) {
             const userBalance = result[0]
             let newBalanceCount = parseFloat(balanceCount)
             if(userBalance.balance < newBalanceCount) {
-                resData = ResMessage.setFailRes(`余额不足${newBalanceCount}元`)
+                ResFuns.responseFail(res, `余额不足${newBalanceCount}元`)
             } else {
-                let newDialog = {
-                    datetime: moment(),
-                    content: `取出${newBalanceCount}，用于${dialog}`
-                }
-                userBalance.dialog.push(newDialog)
                 userBalance.balance -= newBalanceCount
                 await BalanceModal.updateOne(searchKey, userBalance)
-                resData = ResMessage.setSucRes('取出成功')
+
+                const newDialog = DialogModel({
+                    user_id, group_id,
+                    dialog: {
+                        datetime: moment(),
+                        content: `取出金额${newBalanceCount}`
+                    }
+                })
+                newDialog.save()
+                ResFuns.responseSuc(res, '取出成功')
             }
+        } else {
+            ResFuns.responseFail(res, '找不到该条数据')
         }
-        res.json(resData)
     } catch(err) {
         console.log(err)
     }

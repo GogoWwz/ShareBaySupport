@@ -1,5 +1,5 @@
 const BalanceModel =require('../../models/Balance')
-const ResMessage = require('../../utils/resMessage')
+const ResFuns = require('../../utils/resFuns')
 
 const balanceRouter = async (req, res) => {
     const { userId: user_id, groupId: group_id } = req.query
@@ -11,7 +11,6 @@ const balanceRouter = async (req, res) => {
             searchQuery['group_id'] = group_id
         }
         const result = await BalanceModel.find(searchQuery)
-        let data = ResMessage.setFailRes('查询失败')
         if(result.length) {
             let balance = 0
             for(let i = 0; i < result.length; i++) {
@@ -20,9 +19,10 @@ const balanceRouter = async (req, res) => {
             let resData = {
                 balance
             }   
-            data = ResMessage.setSucRes('查询成功', resData)
+            ResFuns.responseSuc(res, '查询成功', resData)
+        } else {
+            ResFuns.responseFail(res, '找不到该条数据')
         }
-        res.json(data)
     } catch(err) {
         console.log(err)
     }
