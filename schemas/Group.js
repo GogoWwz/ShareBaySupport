@@ -9,6 +9,10 @@ const GroupSchema = Schema({
         type: String,
         require: true,
         default: 'SB no.1'
+    },
+    group_balance: {
+        type: Number,
+        default: 0
     }
 })
 

@@ -10,10 +10,14 @@ Router.post('/login', require('./login/login'))
 
 // 注册路由
 Router.post('/register', require('./register/register'))
+
 // 获取组别
 Router.get('/group/list', require('./group/list'))
+// 创建组
+Router.post('/group/create', require('./group/create'))
 // 退出某组
 Router.post('/group/exit', require('./group/exit'))
+
 // 获取余额
 Router.get('/home/getBalance', require('./home/getBalance'))
 // 获取日志
