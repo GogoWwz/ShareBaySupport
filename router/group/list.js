@@ -19,7 +19,7 @@ const groupListRouter = async (req, res) => {
             })
             ResFuns.responseSuc(res, '查询成功', groupResList)
         } else {
-            ResFuns.responseFail(res, '找不到该条数据')
+            ResFuns.responseFail(res, '该用户目前没有任何分组')
         }
     } catch(err) {
         console.log(err)
